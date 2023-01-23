@@ -2,21 +2,6 @@ import bcrypt from 'bcrypt'
 import { v4 as uuid } from 'uuid'
 import db from '../database/db.js'
 
-export async function signUp (request, response) {
-    
-    const { name, email, password } = request.body
-
-    try {
-        
-        const pass = bcrypt.hashSync(password, 10)
-        await db.collection('users').insertOne({name, email, password: pass})
-        return response.status(201).send('OK')
-
-    } catch(error) {
-        return response.send(error).status(500)
-    }
-}
-
 export async function signIn (request, response) {
 
     const { email, password } = request.body
@@ -31,6 +16,21 @@ export async function signIn (request, response) {
         } else {
             return response.status(401).send('Unauthorized')
         }
+    } catch(error) {
+        return response.send(error).status(500)
+    }
+}
+
+export async function signUp (request, response) {
+    
+    const { name, email, password } = request.body
+
+    try {
+        
+        const pass = bcrypt.hashSync(password, 10)
+        await db.collection('users').insertOne({name, email, password: pass})
+        return response.status(201).send('OK')
+
     } catch(error) {
         return response.send(error).status(500)
     }
