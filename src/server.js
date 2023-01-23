@@ -15,4 +15,4 @@ server.use(cors())
 server.use(authRouter)
 server.use(postRouter)
 
-server.listen(process.env.PORT)
+server.listen(5000)

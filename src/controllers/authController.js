@@ -7,9 +7,11 @@ export async function signUp (request, response) {
     const { name, email, password } = request.body
 
     try {
-        const pass = bcrypt.hashSync(password, 15)
+        
+        const pass = bcrypt.hashSync(password, 10)
         await db.collection('users').insertOne({name, email, password: pass})
         return response.status(201).send('OK')
+
     } catch(error) {
         return response.send(error).status(500)
     }
